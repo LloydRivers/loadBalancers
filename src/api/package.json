@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-     "start": "node index.js"
+    "start": "node index.js",
+    "spike:test": "docker compose -f docker-compose.k6-spike.yml up --build"
   },
   "keywords": [],
   "author": "",
