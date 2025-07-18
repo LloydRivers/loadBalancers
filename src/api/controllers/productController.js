@@ -1,4 +1,8 @@
-import insertProducts from "../models/productModel.js";
+import {
+  insertProducts,
+  fetchAllProducts,
+  fetchProductById,
+} from "../models/productModel.js";
 
 export const seedProducts = async (req, res) => {
   try {
@@ -35,6 +39,32 @@ export const seedProducts = async (req, res) => {
     res.send(`Inserted ${products.length} products into the database.`);
   } catch (error) {
     console.error("Error seeding products:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+export const getAllProducts = async (req, res) => {
+  try {
+    const products = await fetchAllProducts();
+    res.json(products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+export const getProductById = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const product = await fetchProductById(id);
+
+    if (!product) {
+      return res.status(404).send("Product not found");
+    }
+
+    res.json(product);
+  } catch (error) {
+    console.error("Error fetching product by ID:", error);
     res.status(500).send("Internal Server Error");
   }
 };

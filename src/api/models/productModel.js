@@ -1,6 +1,6 @@
 import { db, pgp } from "../database/db.js";
 
-const insertProducts = async (products) => {
+export const insertProducts = async (products) => {
   const columns = new pgp.helpers.ColumnSet(
     [
       "id",
@@ -21,4 +21,12 @@ const insertProducts = async (products) => {
   return db.none(insertQuery);
 };
 
-export default insertProducts;
+export const fetchAllProducts = async () => {
+  return await db.any("SELECT * FROM products ORDER BY id ASC");
+};
+
+export const fetchProductById = async (id) => {
+  return await db.oneOrNone("SELECT * FROM products WHERE id = $1", [id]);
+};
+
+export { insertProducts, fetchAllProducts, fetchProductById };
