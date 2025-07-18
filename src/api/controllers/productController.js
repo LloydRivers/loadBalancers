@@ -1,3 +1,5 @@
+import redis from "../database/redisClient.js";
+
 import {
   insertProducts,
   fetchAllProducts,
@@ -45,10 +47,24 @@ export const seedProducts = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
   try {
+    const cacheKey = "all-products";
+
+    // Check Redis cache
+    const cached = await redis.get(cacheKey);
+    if (cached) {
+      console.log("✅ Returning products from cache");
+      return res.json(JSON.parse(cached));
+    }
+
+    // Otherwise fetch from DB
     const products = await fetchAllProducts();
+
+    // Cache in Redis for 60 seconds
+    await redis.set(cacheKey, JSON.stringify(products), { EX: 60 });
+
     res.json(products);
-  } catch (error) {
-    console.error("Error fetching products:", error);
+  } catch (err) {
+    console.error("Error getting products:", err);
     res.status(500).send("Internal Server Error");
   }
 };
@@ -56,11 +72,21 @@ export const getAllProducts = async (req, res) => {
 export const getProductById = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
+    const cacheKey = `product-${id}`;
+
+    const cached = await redis.get(cacheKey);
+    if (cached) {
+      console.log(`✅ Product ${id} served from cache`);
+      return res.json(JSON.parse(cached));
+    }
+
     const product = await fetchProductById(id);
 
     if (!product) {
       return res.status(404).send("Product not found");
     }
+
+    await redis.set(cacheKey, JSON.stringify(product), { EX: 60 });
 
     res.json(product);
   } catch (error) {
