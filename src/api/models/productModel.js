@@ -28,5 +28,3 @@ export const fetchAllProducts = async () => {
 export const fetchProductById = async (id) => {
   return await db.oneOrNone("SELECT * FROM products WHERE id = $1", [id]);
 };
-
-export { insertProducts, fetchAllProducts, fetchProductById };
