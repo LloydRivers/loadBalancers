@@ -8,6 +8,7 @@ services:
     environment:
       NODE_ENV: development
       INSTANCE_NAME: express-one
+      DATABASE_URL: postgres://postgres:password@database:5432/mydatabase
     networks:
       - app-network
   # -----------------------------------------
@@ -18,6 +19,7 @@ services:
     environment:
       NODE_ENV: development
       INSTANCE_NAME: express-two
+      DATABASE_URL: postgres://postgres:password@database:5432/mydatabase
     networks:
       - app-network
   # -----------------------------------------
@@ -28,6 +30,7 @@ services:
     environment:
       NODE_ENV: development
       INSTANCE_NAME: express-three
+      DATABASE_URL: postgres://postgres:password@database:5432/mydatabase
     networks:
       - app-network
   # -----------------------------------------
@@ -44,6 +47,28 @@ services:
     networks:
       - app-network
   # -----------------------------------------
+  database:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+  # -----------------------------------------
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - app-network
+    # -----------------------------------------
+volumes:
+  db_data:
+
 networks:
   app-network:
     driver: bridge
