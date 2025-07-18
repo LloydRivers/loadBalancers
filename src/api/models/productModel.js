@@ -1,4 +1,4 @@
-const { db, pgp } = require("../database/db");
+import { db, pgp } from "../database/db.js";
 
 const insertProducts = async (products) => {
   const columns = new pgp.helpers.ColumnSet(
@@ -21,6 +21,4 @@ const insertProducts = async (products) => {
   return db.none(insertQuery);
 };
 
-module.exports = {
-  insertProducts,
-};
+export default insertProducts;

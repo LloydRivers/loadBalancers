@@ -1,7 +1,8 @@
-const express = require("express");
+import express from "express";
+import routes from "./routes/index.js";
+import loggingMiddleware from "./middleware/logging.js";
+
 const app = express();
-const routes = require("./routes");
-const loggingMiddleware = require("./middleware/logging");
 
 app.use(loggingMiddleware);
 app.use(express.json());

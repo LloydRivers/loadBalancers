@@ -1,7 +1,7 @@
-const express = require("express");
-const router = express.Router();
+import { Router } from "express";
+const router = Router();
 
-const productsRoutes = require("./products");
+import productsRoutes from "./products.js";
 
 router.get("/", (req, res) => {
   const instance = process.env.INSTANCE_NAME || "unknown";
@@ -10,4 +10,4 @@ router.get("/", (req, res) => {
 
 router.use("/products", productsRoutes);
 
-module.exports = router;
+export default router;

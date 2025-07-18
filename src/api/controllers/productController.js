@@ -1,6 +1,6 @@
-const { insertProducts } = require("../models/productModel");
+import insertProducts from "../models/productModel.js";
 
-exports.seedProducts = async (req, res) => {
+export const seedProducts = async (req, res) => {
   try {
     const response = await fetch("https://dummyjson.com/products");
     const json = await response.json();
