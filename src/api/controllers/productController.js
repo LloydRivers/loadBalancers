@@ -49,17 +49,14 @@ export const getAllProducts = async (req, res) => {
   try {
     const cacheKey = "all-products";
 
-    // Check Redis cache
     const cached = await redis.get(cacheKey);
     if (cached) {
       console.log("✅ Returning products from cache");
       return res.json(JSON.parse(cached));
     }
 
-    // Otherwise fetch from DB
     const products = await fetchAllProducts();
 
-    // Cache in Redis for 60 seconds
     await redis.set(cacheKey, JSON.stringify(products), { EX: 60 });
 
     res.json(products);
