@@ -32,8 +32,8 @@
 
 - **Subnets**
 
-  - 2× Public Subnets (for ALB, NAT Gateway)
-  - 2× Private Subnets (for ECS, RDS, Redis)
+  - 1× Public Subnets (for ALB, NAT Gateway)
+  - 1× Private Subnets (for ECS, RDS, Redis)
 
 - **Internet Gateway**
 
