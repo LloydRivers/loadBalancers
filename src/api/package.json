@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node ./index.js",
     "spike:test": "docker compose -f docker-compose.k6-spike.yml up --build"
   },
   "keywords": [],
@@ -12,6 +12,11 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.62.0",
+    "@opentelemetry/sdk-metrics": "^2.0.1",
+    "@opentelemetry/sdk-node": "^0.203.0",
+    "@opentelemetry/sdk-trace-node": "^2.0.1",
     "express": "^5.1.0",
     "pg-promise": "^11.15.0",
     "redis": "^5.6.0"

@@ -1,3 +1,4 @@
+import './instrumentation.js';
 import express from "express";
 import routes from "./routes/index.js";
 import loggingMiddleware from "./middleware/logging.js";
